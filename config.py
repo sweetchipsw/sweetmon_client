@@ -20,14 +20,16 @@ isDebug = True
 FUZZER_NAME = "TESTFUZZ"
 FUZZING_TARGET = "TESTTARGET"
 BINARY = "TESTBINARY"
+SERVER_URL = "sweetfuzz.sweetchip.kr"
+SERVER_PROTOCOL = "https://"
 ########################################################################
 
 # Fuzzer Information
 ########################################################################
 # YOU CAN MODIFY GLOBAL INFO
 GLOBALINFO = {
-	"SERVER_URL" : "sweetfuzz.sweetchip.kr", # Sweetmon
-	"SERVER_PROTOCOL" : "https://", # Protocol, Default
+	"SERVER_URL" : SERVER_URL, # Sweetmon
+	"SERVER_PROTOCOL" : SERVER_PROTOCOL, # Protocol, Default
 	"TIME_PING" : 60, # Sec (Seconds)
 	"TIME_MAXTIME" : 70, # MS (MiliSeconds)
 	"MAXMEM" : 70, # MB (For Libfuzzer)

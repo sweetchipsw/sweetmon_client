@@ -1,3 +1,8 @@
 from config import *
+from sweetmon import *
 
-print(TEST_CONFIG)
+# Test PING
+F = Fuzzer(FUZZERINFO)
+print F.Ping()
+
+#

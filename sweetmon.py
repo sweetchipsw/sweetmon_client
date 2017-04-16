@@ -9,15 +9,14 @@ import inspect
 URL = GLOBALINFO["SERVER_PROTOCOL"] + GLOBALINFO["SERVER_URL"]
 URL_FUZZ = URL+"/fuzz"
 URL_UPLOAD = URL+"/upload"
-URL_PING = URL+"/ping"
+URL_PING = URL+"/fuzz/ping"
 URL_MACHINE = URL+"/machine"
 URL_REGISTER = URL+"/fuzz/register"
-
 
 ##########################################################
 # Define REQUESTS
 ##########################################################
-# To prevent blocking by CSRF Token in Django.
+# To prevent blocking by CSRF protection in Django.
 DEFAULTHEADER = {"Cookie" : "csrftoken=sweetfuzz", "X-CSRFTOKEN":"sweetfuzz", "Referer":URL}
 
 def POST(url, data, header=DEFAULTHEADER):
@@ -89,15 +88,15 @@ class Fuzzer:
 			result = POST(URL_PING, post).text
 		except Exception as e:
 			print("[*] Error at %s" % inspect.stack()[0][3], e)
-		if result == "success":
+		if result == "Done!":
 			return True;
 		return False;
 
 	def RunPingThread(self):
 		return True
 
-	def UploadCrash(self):
-		post = {}
+	def UploadCrash(self, crashlog, title):
+		post = {"token" : self.__token, "crashlog" : crashlog, "title":title}
 		req = POST(URL_UPLOAD, post)
 		return 1;
 

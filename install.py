@@ -10,8 +10,7 @@ try:
     import requests
 except ImportError, e:
     print "ImportError: %s" % (e)
-    print "Did you try installing rsa package?"
-    print "Try : sudo pip install requests"
+    print "Please install the requests"
     exit()
 
 ##########################################################
