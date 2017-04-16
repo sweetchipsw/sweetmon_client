@@ -12,15 +12,15 @@ import os
 # STATIC CONFIG
 ########################################################################
 fConfigFile = "config.json"
+isDebug = True
 ########################################################################
 
 # User Define Status
 ########################################################################
 FUZZER_NAME = "TESTFUZZ"
 FUZZING_TARGET = "TESTTARGET"
-BINARY = ""
+BINARY = "TESTBINARY"
 ########################################################################
-
 
 # Fuzzer Information
 ########################################################################
@@ -106,16 +106,18 @@ class Machine:
 		self.userName = result
 		return True
 
-	def __GetTokenFromServer(self):
-		currentToken = self.FUZZERINFO["TOKEN"]
-		# If already has token..
-		if currentToken != "":
-			self.token = currentToken
-			return True
-		# Get New token
-		self.token = "TEMPTOKEN"
+	def GetToken(self):
+		return self.token
+
+	def SetToken(self, newToken):
+		# Note that you should run Update() method after run this method.
+		self.token = newToken
+		self.Update()
 		return True
 
+	def __CheckToken(self):
+		if self.token == None:
+			print("[*] You should register on SWEETMON before running fuzzer.")
 
 	def Update(self):
 		# Update Information
@@ -124,7 +126,6 @@ class Machine:
 		self.__GetPriIP()
 		self.__GetUserName()
 		self.__GetCurrentPath()
-		self.__GetTokenFromServer()
 
 		# Fill it to dictionary
 		self.FUZZERINFO["OWNER"] = self.userName
@@ -132,7 +133,9 @@ class Machine:
 		self.FUZZERINFO["MACHINE"]["OS"] = self.os
 		self.FUZZERINFO["MACHINE"]["IP_PUB"] = self.pubIp
 		self.FUZZERINFO["MACHINE"]["IP_PRI"] = self.priIp
+
 		self.FUZZERINFO["TOKEN"] = self.token
+
 		return FUZZERINFO
 
 	def Export(self):
@@ -158,28 +161,40 @@ def SaveConfig(dictionary):
 
 	return True
 
-def CreateConfig():
-	SaveConfig(INFO)
+def CreateConfig(FUZZERINFO):
+	SaveConfig(FUZZERINFO)
 	return True
 
 # Tools
 def CHECKNULL(*args):
 	for arg in args:
 		if arg == "" or arg == None:
-			raise
+			print("Please fill variable first.")
+			raise Exception
 	return True
 
-if __name__ == '__main__':
-	# Check Config file
+def DBGPRINT(*args):
+	if isDebug == True:
+		print(args)
 
-	# Load config file
+#######################################################################
+# MAIN
+#######################################################################
+# Check config variable
+checkList = [FUZZER_NAME, FUZZING_TARGET, BINARY]
+for element in checkList:
+	CHECKNULL(element)
 
-	# Check config variable
+# Check Config file
+if os.path.exists(fConfigFile) == False:
+	print("[*] Create new Configuration file")
 
-	# Update Info
-	env = Machine(FUZZERINFO)
-	env.Update()
-	FUZZERINFO = env.Export()
+	machine = Machine(FUZZERINFO)
+	machine.Update()
+	FUZZERINFO = machine.Export()
 
-	print(FUZZERINFO)
+	CreateConfig(FUZZERINFO)
+else:
+	FUZZERINFO = LoadConfig()
 
+DBGPRINT("[*] Config file loaded.")

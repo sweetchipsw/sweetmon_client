@@ -1,7 +1,11 @@
-#!/bin/python3
 from config import *
+from sweetmon import *
 import socket
+import getpass
 
+##########################################################
+# Check Dependencies
+##########################################################
 try:
     import requests
 except ImportError, e:
@@ -10,14 +14,22 @@ except ImportError, e:
     print "Try : sudo pip install requests"
     exit()
 
-DEFAULTHEAD = {"Cookie" : "csrftoken=sweetfuzz", "X-CSRFTOKEN":"sweetfuzz"}
+##########################################################
+# Register
+##########################################################
+if FUZZERINFO["TOKEN"] == None:
+	F = Fuzzer(FUZZERINFO)
+	print("[*] Input password to access SWEETMON.. ")
+	password = getpass.getpass()
 
-def SendPostResult(url, data, header=DEFAULTHEAD):
-	data = data
-	req = requests.post(url, header=header, data=data)
-	result = req.json()
-
-password = ""
-ip_pub = ""
-print([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
-# print(GetPriIP())
+	newToken = F.Register(password)
+	if newToken == False:
+		print("[-] Could not register on server.")
+		exit(-1)
+	else:
+		FUZZERINFO["TOKEN"] = newToken
+		F.SetFUZZERINFO(FUZZERINFO)
+		SaveConfig(FUZZERINFO)
+else:
+	print("[*] You've installed fuzzer. If you want to reset config, please remove "+fConfigFile)
+	exit(1)
