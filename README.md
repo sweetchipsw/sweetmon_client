@@ -8,6 +8,8 @@
 
 sweetmon-client를 이용하면 Windows, Linux, Mac에서 Fuzzer를 모니터링 할 수 있고 Crash를 한곳으로 모을 수 있으며 다운로드 등이 가능합니다.
 
+**이 프로젝트는 계속 개발중인 프로젝트 입니다.**
+
 An client for ```sweetmon``` project based on python.
 
 The sweetmon is an fuzzer monitoring system based on python+django+apache.
@@ -32,7 +34,7 @@ You need to install several packages before use sweetmon-client.
 - requests
 - and
 - the
-- others
+- other
 
 
 위 모듈들은 아래와 같이 다운로드 할 수 있습니다. (Linux, Mac)

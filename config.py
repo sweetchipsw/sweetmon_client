@@ -17,11 +17,18 @@ isDebug = True
 
 # User Define Status
 ########################################################################
-FUZZER_NAME = "TESTFUZZ"
-FUZZING_TARGET = "TESTTARGET"
-BINARY = "TESTBINARY"
-SERVER_URL = "sweetfuzz.sweetchip.kr"
-SERVER_PROTOCOL = "https://"
+FUZZER_NAME = "" # AWESOMEFUZZER
+FUZZING_TARGET = "" # Weak_application
+BINARY = "" # your_fuzzer
+SERVER_URL = "" # sub.domain.com
+SERVER_PROTOCOL = "https://" # or http://
+
+if isDebug == True:
+	FUZZER_NAME = "TESTFUZZ"
+	FUZZING_TARGET = "TESTTARGET"
+	BINARY = "TESTBINARY"
+	SERVER_URL = "sweetfuzz.sweetchip.kr"
+	SERVER_PROTOCOL = "https://"
 ########################################################################
 
 # Fuzzer Information

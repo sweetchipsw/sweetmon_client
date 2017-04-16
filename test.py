@@ -5,4 +5,3 @@ from sweetmon import *
 F = Fuzzer(FUZZERINFO)
 print F.Ping()
 
-#
