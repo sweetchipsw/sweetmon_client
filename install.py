@@ -30,5 +30,5 @@ if FUZZERINFO["TOKEN"] == None:
 		F.SetFUZZERINFO(FUZZERINFO)
 		SaveConfig(FUZZERINFO)
 else:
-	print("[*] You've installed fuzzer. If you want to reset config, please remove "+fConfigFile)
+	print("[*] You've already installed the fuzzer. If you want to reset your configuration, please remove "+fConfigFile)
 	exit(1)

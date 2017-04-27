@@ -11,14 +11,18 @@ import os
 
 # STATIC CONFIG
 ########################################################################
+# Configuration
 fConfigFile = "config.json"
+
+# Debug
 isDebug = True
+
 ########################################################################
 
 # User Define Status
 ########################################################################
 FUZZER_NAME = "" # AWESOMEFUZZER
-FUZZING_TARGET = "" # Weak_application
+FUZZING_TARGET = "" # Target application
 BINARY = "" # your_fuzzer
 SERVER_URL = "" # sub.domain.com
 SERVER_PROTOCOL = "https://" # or http://
@@ -27,8 +31,9 @@ if isDebug == True:
 	FUZZER_NAME = "TESTFUZZ"
 	FUZZING_TARGET = "TESTTARGET"
 	BINARY = "TESTBINARY"
-	SERVER_URL = "sweetfuzz.sweetchip.kr"
-	SERVER_PROTOCOL = "https://"
+	# SERVER_URL = "sweetfuzz.sweetchip.kr"
+	SERVER_URL = "127.0.0.1:8000"
+	SERVER_PROTOCOL = "http://"
 ########################################################################
 
 # Fuzzer Information
@@ -179,8 +184,8 @@ def CHECKNULL(*args):
 	for arg in args:
 		if arg == "" or arg == None:
 			print("Please fill variable first.")
-			raise Exception
-	return True
+			return True
+	return False
 
 def DBGPRINT(*args):
 	if isDebug == True:
@@ -190,9 +195,11 @@ def DBGPRINT(*args):
 # MAIN
 #######################################################################
 # Check config variable
-checkList = [FUZZER_NAME, FUZZING_TARGET, BINARY]
+checkList = [FUZZER_NAME, FUZZING_TARGET, BINARY, SERVER_URL, SERVER_PROTOCOL]
 for element in checkList:
-	CHECKNULL(element)
+	if CHECKNULL(element):
+		print("[*] Please fill blank variable.")
+		exit(-1)
 
 # Check Config file
 if os.path.exists(fConfigFile) == False:

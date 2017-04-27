@@ -8,7 +8,7 @@ import inspect
 ##########################################################
 URL = GLOBALINFO["SERVER_PROTOCOL"] + GLOBALINFO["SERVER_URL"]
 URL_FUZZ = URL+"/fuzz"
-URL_UPLOAD = URL+"/upload"
+URL_UPLOAD = URL+"/fuzz/crash"
 URL_PING = URL+"/fuzz/ping"
 URL_MACHINE = URL+"/machine"
 URL_REGISTER = URL+"/fuzz/register"
@@ -19,10 +19,10 @@ URL_REGISTER = URL+"/fuzz/register"
 # To prevent blocking by CSRF protection in Django.
 DEFAULTHEADER = {"Cookie" : "csrftoken=sweetfuzz", "X-CSRFTOKEN":"sweetfuzz", "Referer":URL}
 
-def POST(url, data, header=DEFAULTHEADER):
+def POST(url, data, header=DEFAULTHEADER, **kwargs):
 	# Wrap requests.post method
 	# url : Str, data : Dict, header : Dict
-	req = requests.post(url, headers=header, data=data)
+	req = requests.post(url, headers=header, data=data, **kwargs)
 	result = req
 	return result
 
@@ -37,7 +37,7 @@ class Fuzzer:
 	def __init__(self, FUZZERINFO):
 
 		self.FUZZERINFO = FUZZERINFO
-		self.initComplete = False; # Check init status.
+		self.__initComplete = False; # Check init status.
 
 		self.__numTestcase__ = 0;
 		self.__numCrashes__ = 0;
@@ -56,7 +56,7 @@ class Fuzzer:
 		self.__token = fuzzerInfo["TOKEN"]
 		self.__binary = fuzzerInfo["BINARY"]
 		self.__currentdir = fuzzerInfo["CURRENT_DIR"]
-		self.initComplete = True
+		self.__initComplete = True
 		return 1;
 
 	#################################################################
@@ -78,14 +78,14 @@ class Fuzzer:
 	#################################################################
 	def SendMachineInfo(self):
 		strFuzzerInfo = json.dumps(self.FUZZERINFO)
-		post = {"INFO" : self.FUZZERINFO}
-		req = POST(URL_MACHINE, post)
+		data = {"INFO" : self.FUZZERINFO}
+		req = POST(URL_MACHINE, data)
 		return 1;
 
 	def Ping(self):
-		post = {"token" : self.__token}
+		data = {"token" : self.__token}
 		try:
-			result = POST(URL_PING, post).text
+			result = POST(URL_PING, data).text
 		except Exception as e:
 			print("[*] Error at %s" % inspect.stack()[0][3], e)
 		if result == "Done!":
@@ -95,26 +95,23 @@ class Fuzzer:
 	def RunPingThread(self):
 		return True
 
-	def UploadCrash(self, crashlog, title):
-		post = {"token" : self.__token, "crashlog" : crashlog, "title":title}
-		req = POST(URL_UPLOAD, post)
-		return 1;
+	def Upload(self, title, crashLog, fname):
+		data = {"token" : self.__token, "crashlog" : crashLog, "title":title}
+		fdata = {'file': open(fname,'rb')}
+		req = POST(URL_UPLOAD, data=data, files=fdata)
+		return True;
 
 	def Register(self, password):
 		fuzzerInfo = self.FUZZERINFO
 		
-		post = { "password" : password, "fuzzer_name" : fuzzerInfo["FUZZERNAME"],
+		data = { "password" : password, "fuzzer_name" : fuzzerInfo["FUZZERNAME"],
 		"pub_ip" : fuzzerInfo["MACHINE"]["IP_PUB"],
-		"pri_ip":fuzzerInfo["MACHINE"]["IP_PRI"], "target":fuzzerInfo["TARGET"] }
+		"pri_ip":fuzzerInfo["MACHINE"]["IP_PRI"], "target":fuzzerInfo["TARGET"]}
 
-		result = POST(URL_REGISTER, post).text
+		result = POST(URL_REGISTER, data).text
 
 		if len(result) == 40:
 			print("[*] Success, Your token is : "+result)
 			return result
 		
 		return False
-
-
-# if __name__ == '__main__':
-# 	main()
