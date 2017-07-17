@@ -32,7 +32,8 @@ if isDebug == True:
 	FUZZING_TARGET = "TESTTARGET"
 	BINARY = "TESTBINARY"
 	# SERVER_URL = "sweetfuzz.sweetchip.kr"
-	SERVER_URL = "127.0.0.1:8000"
+	SERVER_URL = "localhost:8000"
+	#SERVER_URL = "dev.sweetchip.kr"
 	SERVER_PROTOCOL = "http://"
 ########################################################################
 
@@ -94,7 +95,7 @@ class Machine:
 			pubIp = json.loads(req)['origin']
 			self.pubIp = pubIp
 		except Exception as e:
-			print "Could not get IP from "+HOST+" (Check your internet connection)"
+			print("Could not get IP from "+HOST+" (Check your internet connection)")
 			return False
 		return True
 
@@ -170,7 +171,7 @@ def LoadConfig():
 def SaveConfig(dictionary):
 	strDict = json.dumps(dictionary)
 	f = open(fConfigFile, "wb")
-	f.write(strDict)
+	f.write(bytes(strDict))
 	f.close()
 
 	return True

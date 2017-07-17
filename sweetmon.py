@@ -19,6 +19,7 @@ URL_REGISTER = URL+"/fuzz/register"
 # To prevent blocking by CSRF protection in Django.
 DEFAULTHEADER = {"Cookie" : "csrftoken=sweetfuzz", "X-CSRFTOKEN":"sweetfuzz", "Referer":URL}
 
+
 def POST(url, data, header=DEFAULTHEADER, **kwargs):
 	# Wrap requests.post method
 	# url : Str, data : Dict, header : Dict
@@ -42,7 +43,7 @@ class Fuzzer:
 		self.__numTestcase__ = 0;
 		self.__numCrashes__ = 0;
 		
-		# Values comes frome FUZZERINFO
+		# Values comes from FUZZERINFO
 		self.__token = None
 		self.__binary = None
 		self.__currentdir = None
@@ -84,6 +85,7 @@ class Fuzzer:
 
 	def Ping(self):
 		data = {"token" : self.__token}
+		result = ""
 		try:
 			result = POST(URL_PING, data).text
 		except Exception as e:
@@ -93,10 +95,11 @@ class Fuzzer:
 		return False;
 
 	def RunPingThread(self):
+
 		return True
 
 	def Upload(self, title, crashLog, fname):
-		data = {"token" : self.__token, "crashlog" : crashLog, "title":title}
+		data = {"token": self.__token, "crashlog": crashLog, "title": title}
 		fdata = {'file': open(fname,'rb')}
 		req = POST(URL_UPLOAD, data=data, files=fdata)
 		return True;
@@ -104,7 +107,7 @@ class Fuzzer:
 	def Register(self, password):
 		fuzzerInfo = self.FUZZERINFO
 		
-		data = { "password" : password, "fuzzer_name" : fuzzerInfo["FUZZERNAME"],
+		data = { "userkey" : password, "fuzzer_name" : fuzzerInfo["FUZZERNAME"],
 		"pub_ip" : fuzzerInfo["MACHINE"]["IP_PUB"],
 		"pri_ip":fuzzerInfo["MACHINE"]["IP_PRI"], "target":fuzzerInfo["TARGET"]}
 

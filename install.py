@@ -8,9 +8,9 @@ import getpass
 ##########################################################
 try:
     import requests
-except ImportError, e:
-    print "ImportError: %s" % (e)
-    print "Please install the requests"
+except ImportError as e:
+    print("ImportError: %s" % (e))
+    print("Please install the requests")
     exit()
 
 ##########################################################
@@ -18,11 +18,11 @@ except ImportError, e:
 ##########################################################
 if FUZZERINFO["TOKEN"] == None:
 	F = Fuzzer(FUZZERINFO)
-	print("[*] Input password to access SWEETMON.. ")
+	print("[*] Input your key to access SWEETMON.. (You can find your key in your profile)")
 	password = getpass.getpass()
 
 	newToken = F.Register(password)
-	if newToken == False:
+	if not newToken:
 		print("[-] Could not register on server.")
 		exit(-1)
 	else:
