@@ -2,6 +2,7 @@ from config import *
 import requests
 import json
 import inspect
+import threading
 
 ##########################################################
 # Define URL
@@ -95,7 +96,9 @@ class Fuzzer:
 		return False;
 
 	def RunPingThread(self):
-
+		print("[*] Tick ..")
+		self.Ping()
+		threading.Timer(60,self.RunPingThread).start()
 		return True
 
 	def Upload(self, title, crashLog, fname):

@@ -6,7 +6,7 @@ import uuid
 print("START TEST / LOAD CONFIG")
 
 F = Fuzzer(FUZZERINFO)
-
+# print("TEST AUTO PING", F.RunPingThread())
 print("TEST PING", F.Ping())
-print("TEST UPLOAD", F.Upload(uuid.uuid1(), "here\nis_l0g", "/etc/passwd"))
+print("TEST UPLOAD", F.Upload("test", "here\nis_l0g", "/etc/hostconfig"))
 print("END OF TEST..")
