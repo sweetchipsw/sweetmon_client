@@ -98,3 +98,8 @@ ENV/
 .ropeproject
 
 # End of https://www.gitignore.io/api/python
+
+config.json
+test.py
+.idea/*
+*.swp
