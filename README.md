@@ -1,26 +1,34 @@
 # SWEETMON-client
 
-이 프로젝트는 Python언어를 기반으로 만들어진 ```sweetmon``` 의 클라이언트입니다.
+This project is a python module to interact with '[SWEETMON](https://github.com/sweetchipsw/sweetmon)' project.
 
-```sweetmon```은 Python+Django+Apache를 기반으로 한 Fuzzing Monitoring System입니다. 
+Fuzz testers can adapt their fuzzer easily.
 
-이 프로젝트를 사용하기 전엔 반드시 sweetmon이 먼저 세팅이 완료되어야 합니다.
 
-sweetmon-client를 이용하면 Windows, Linux, Mac에서 Fuzzer를 모니터링 할 수 있고 Crash를 한곳으로 모을 수 있으며 다운로드 등이 가능합니다.
 
-**이 프로젝트는 계속 개발중인 프로젝트 입니다.**
+## Fast Install & Usage
 
-An client for ```sweetmon``` project based on python.
+### Prerequirement
 
-The sweetmon is an fuzzer monitoring system based on python+django+apache.
+- You should install sweetmon first to use this project. 
+- Sweetmon : https://github.com/sweetchipsw/sweetmon
 
-## Installation
 
-### Dependency
 
-##### Python
+### Installation
 
-- Download python3 at http://python.org/ on Windows or ```apt-get install python3``` on Linux.
+1. Install Python3
+   - Download python3 at http://python.org/ on Windows
+   - ```apt-get install python3``` on Linux.
+2. Install Python package
+   - ```pip3 install requests```
+3. Clone sweetmon-client
+   - ```git clone http://github.com/sweetchipsw/sweetmon-client```
+4. See example
+
+
+
+- ​
 
 ##### SWEETMON (Important)
 
@@ -52,7 +60,7 @@ pip.exe install requests
 
 ### Clone project
 
-You don't have to install using setup.py. just download this project.
+You don't have to install using 'setup.py' just download this project.
 
 setup.py를 이용하여 설치하지 않고 clone 후 바로 이용가능합니다.
 

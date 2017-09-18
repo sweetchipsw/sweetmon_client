@@ -36,7 +36,7 @@ class Fuzzer:
 		Fuzzing Fuzzing Fuzzing!
 
 	"""
-	def __init__(self, FUZZERINFO):
+	def __init__(self):
 
 		self.FUZZERINFO = FUZZERINFO
 		self.__initComplete = False; # Check init status.
@@ -46,7 +46,7 @@ class Fuzzer:
 		
 		# Values comes from FUZZERINFO
 		self.__token = None
-		self.__binary = None
+		# self.__binary = None # deprecated
 		self.__currentdir = None
 
 		self.__ParseInfo__() # Init Essential info
@@ -56,7 +56,7 @@ class Fuzzer:
 		# Token, Binary name, Current Directory
 		fuzzerInfo = self.FUZZERINFO
 		self.__token = fuzzerInfo["TOKEN"]
-		self.__binary = fuzzerInfo["BINARY"]
+		# self.__binary = fuzzerInfo["BINARY"] # deprecated
 		self.__currentdir = fuzzerInfo["CURRENT_DIR"]
 		self.__initComplete = True
 		return 1;

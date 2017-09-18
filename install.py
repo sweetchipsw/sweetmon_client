@@ -17,7 +17,7 @@ except ImportError as e:
 # Register
 ##########################################################
 if FUZZERINFO["TOKEN"] == None:
-	F = Fuzzer(FUZZERINFO)
+	F = Fuzzer()
 	print("[*] Input your key to access SWEETMON.. (You can find your key in your profile)")
 	password = getpass.getpass()
 

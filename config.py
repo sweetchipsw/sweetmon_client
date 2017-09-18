@@ -23,17 +23,13 @@ isDebug = True
 ########################################################################
 FUZZER_NAME = "" # AWESOMEFUZZER
 FUZZING_TARGET = "" # Target application
-BINARY = "" # your_fuzzer
 SERVER_URL = "" # sub.domain.com
-SERVER_PROTOCOL = "https://" # or http://
+SERVER_PROTOCOL = "" # https:// or http://
 
 if isDebug == True:
 	FUZZER_NAME = "TESTFUZZ"
 	FUZZING_TARGET = "TESTTARGET"
-	BINARY = "TESTBINARY"
-	# SERVER_URL = "sweetfuzz.sweetchip.kr"
 	SERVER_URL = "localhost:8000"
-	#SERVER_URL = "dev.sweetchip.kr"
 	SERVER_PROTOCOL = "http://"
 ########################################################################
 
@@ -56,7 +52,7 @@ FUZZERINFO = {
 	"OWNER":"",
 	"CURRENT_DIR":"",
 	"TOKEN":"",
-	"BINARY":BINARY,
+	# "BINARY":BINARY, # Deprecated
 	"MACHINE" : {
 		"OS" : None,
 		"IP_PUB" : "",
@@ -196,14 +192,14 @@ def DBGPRINT(*args):
 # MAIN
 #######################################################################
 # Check config variable
-checkList = [FUZZER_NAME, FUZZING_TARGET, BINARY, SERVER_URL, SERVER_PROTOCOL]
+checkList = [FUZZER_NAME, FUZZING_TARGET, SERVER_URL, SERVER_PROTOCOL] # BINARY
 for element in checkList:
 	if CHECKNULL(element):
 		print("[*] Please fill blank variable.")
 		exit(-1)
 
 # Check Config file
-if os.path.exists(fConfigFile) == False:
+if not os.path.exists(fConfigFile):
 	print("[*] Create new Configuration file")
 
 	machine = Machine(FUZZERINFO)
