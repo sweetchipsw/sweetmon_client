@@ -39,9 +39,7 @@ if isDebug == True:
 GLOBALINFO = {
 	"SERVER_URL" : SERVER_URL, # Sweetmon
 	"SERVER_PROTOCOL" : SERVER_PROTOCOL, # Protocol, Default
-	"TIME_PING" : 60, # Sec (Seconds)
-	"TIME_MAXTIME" : 70, # MS (MiliSeconds)
-	"MAXMEM" : 70, # MB (For Libfuzzer)
+	"TIME_PING" : 60 # Sec (Seconds)
 }
 
 # DO NOT MODIFY FUZZERINFO
@@ -52,7 +50,6 @@ FUZZERINFO = {
 	"OWNER":"",
 	"CURRENT_DIR":"",
 	"TOKEN":"",
-	# "BINARY":BINARY, # Deprecated
 	"MACHINE" : {
 		"OS" : None,
 		"IP_PUB" : "",
