@@ -34,9 +34,11 @@ Fuzz testers can adapt their fuzzer easily.
    SERVER_PROTOCOL = "https://" # or http://
    ```
 
-2. Run install.py
+2. Find your Userkey in your profile.
 
-3. ```shell
+3. Run install.py
+
+4. ```shell
    $ python install.py
    [*] Create new Configuration file
    [*] Input your userkey to access SWEETMON.. (You can find your key at your profile)
@@ -44,7 +46,7 @@ Fuzz testers can adapt their fuzzer easily.
    [*] Success, Your token is : d9a93042e67459df842c3b429a742790b805c056
    ```
 
-4. Now you can adapt sweetmon-client for your fuzzer.
+5. Now you can adapt sweetmon-client for your fuzzer.
 
 
 

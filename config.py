@@ -15,7 +15,7 @@ import os
 fConfigFile = "config.json"
 
 # Debug
-isDebug = True
+isDebug = False
 
 ########################################################################
 
@@ -24,7 +24,7 @@ isDebug = True
 FUZZER_NAME = "" # AWESOMEFUZZER
 FUZZING_TARGET = "" # Target application
 SERVER_URL = "" # sub.domain.com
-SERVER_PROTOCOL = "" # https:// or http://
+SERVER_PROTOCOL = "http://" # https:// or http://
 
 if isDebug == True:
 	FUZZER_NAME = "TESTFUZZ"
@@ -157,14 +157,17 @@ def LoadConfig():
 	result = f.read()
 	f.close()
 
-	objDict = json.loads(result)
+	try:
+		objDict = json.loads(result)
+	except Exception as e:
+		print(e, " Error while parsing json. (json corrupted, please install again.)")
 	
 	return objDict
 
 def SaveConfig(dictionary):
 	strDict = json.dumps(dictionary)
-	f = open(fConfigFile, "wb")
-	f.write(bytes(strDict))
+	f = open(fConfigFile, "w")
+	f.write((strDict))
 	f.close()
 
 	return True
