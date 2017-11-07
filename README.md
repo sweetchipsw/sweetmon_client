@@ -18,7 +18,7 @@ Fuzz testers can adapt their fuzzer easily.
 
 ### Clone project
 
-- ```git clone http://github.com/sweetchipsw/sweetmon-client```
+- ```git clone https://github.com/sweetchipsw/sweetmon_client.git```
 
 
 
